@@ -113,58 +113,62 @@ class HotelFolio(models.Model):
     price_unit = fields.Many2one("account.tax")
     tax_id = fields.Many2one("account.tax")
     discount = fields.Float(
-        string='Discount (%)',
-        digits='Discount',
+        string="Discount (%)",
+        digits="Discount",
         default=0.0,
     )
     price_subtotal = fields.Monetary(
-        string='Subtotal',
-        #compute='_compute_totals',
+        string="Subtotal",
+        # compute='_compute_totals',
         store=True,
-        currency_field='currency_id',
+        currency_field="currency_id",
     )
     price_total = fields.Monetary(
-        string='Total',
-        #compute='_compute_totals',
+        string="Total",
+        # compute='_compute_totals',
         store=True,
-        currency_field='currency_id',
+        currency_field="currency_id",
     )
     currency_id = fields.Many2one(
-        comodel_name='res.currency',
-        string='Currency',
-        #compute='_compute_currency_id',
-        store=True, readonly=False, precompute=True,
+        comodel_name="res.currency",
+        string="Currency",
+        # compute='_compute_currency_id',
+        store=True,
+        readonly=False,
+        precompute=True,
         required=True,
     )
 
-    #@api.depends('move_id.currency_id')
+    # @api.depends('move_id.currency_id')
     def _compute_currency_id(self):
         for line in self:
-            if line.display_type == 'cogs':
+            if line.display_type == "cogs":
                 line.currency_id = line.company_currency_id
             elif line.move_id.is_invoice(include_receipts=True):
                 line.currency_id = line.move_id.currency_id
             else:
                 line.currency_id = line.currency_id or line.company_id.currency_id
 
-
-    #@api.depends('quantity', 'discount', 'price_unit', 'tax_ids', 'currency_id')
+    # @api.depends('quantity', 'discount', 'price_unit', 'tax_ids', 'currency_id')
     def _compute_totals(self):
-        """ Compute 'price_subtotal' / 'price_total' outside of `_sync_tax_lines` because those values must be visible for the
+        """Compute 'price_subtotal' / 'price_total' outside of `_sync_tax_lines` because those values must be visible for the
         user on the UI with draft moves and the dynamic lines are synchronized only when saving the record.
         """
-        AccountTax = self.env['account.tax']
+        AccountTax = self.env["account.tax"]
         for line in self:
             # TODO remove the need of cogs lines to have a price_subtotal/price_total
-            if line.display_type not in ('product', 'cogs'):
+            if line.display_type not in ("product", "cogs"):
                 line.price_total = line.price_subtotal = False
                 continue
 
-            base_line = line.move_id._prepare_product_base_line_for_taxes_computation(line)
+            base_line = line.move_id._prepare_product_base_line_for_taxes_computation(
+                line
+            )
             AccountTax._add_tax_details_in_base_line(base_line, line.company_id)
-            line.price_subtotal = base_line['tax_details']['raw_total_excluded_currency']
-            line.price_total = base_line['tax_details']['raw_total_included_currency']
-
+            line.price_subtotal = base_line["tax_details"][
+                "raw_total_excluded_currency"
+            ]
+            line.price_total = base_line["tax_details"]["raw_total_included_currency"]
 
     @api.constrains("room_line_ids")
     def _check_duplicate_folio_room_line(self):
