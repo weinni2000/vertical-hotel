@@ -104,6 +104,8 @@ class HotelFolio(models.Model):
     hotel_invoice_id = fields.Many2one("account.move", "Invoice", copy=False)
     duration_dummy = fields.Float()
 
+    product_id = fields.Many2one(comodel_name="product.product", string="Product")
+
     @api.constrains("room_line_ids")
     def _check_duplicate_folio_room_line(self):
         """
