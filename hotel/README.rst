@@ -37,11 +37,11 @@ at a hotel/apartment.
 
 You can manage:
 
--  Configure Property
--  Hotel Configuration
--  Manage history of Check In, Check out
--  Manage Folio
--  Payment
+- Configure Property
+- Hotel Configuration
+- Manage history of Check In, Check out
+- Manage Folio
+- Payment
 
 **Table of contents**
 
@@ -69,10 +69,10 @@ Authors
 Contributors
 ------------
 
--  Odoo Community Association (OCA)
--  Serpent Consulting Services Pvt. Ltd.
--  Odoo S.A.
--  Rajan Patel <rajan.p.serpentcs@gmail.com>
+- Odoo Community Association (OCA)
+- Serpent Consulting Services Pvt. Ltd.
+- Odoo S.A.
+- Rajan Patel <rajan.p.serpentcs@gmail.com>
 
 Maintainers
 -----------
