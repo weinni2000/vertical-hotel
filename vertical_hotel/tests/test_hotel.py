@@ -10,8 +10,8 @@ class TestHotel(common.TransactionCase):
     def setUp(self):
         super().setUp()
 
-        self.hotel_folio_obj = self.env["hotel.folio"]
-        self.hotel_folio_line = self.env["hotel.folio.line"]
+        self.hotel_folio_obj = self.env["vertical_hotel.folio"]
+        self.hotel_folio_line = self.env["vertical_hotel.folio.line"]
         self.warehouse = self.env.ref("stock.warehouse0")
         self.partner = self.env["res.partner"].create({"name": "Test Partner"})
         cur_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")

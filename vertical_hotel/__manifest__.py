@@ -31,7 +31,7 @@
         "wizard/hotel_wizard.xml",
     ],
     "assets": {
-        "web.assets_backend": ["hotel/static/src/css/room_kanban.css"],
+        "web.assets_backend": ["vertical_hotel/static/src/css/room_kanban.css"],
     },
     "external_dependencies": {"python": ["python-dateutil"]},
     "images": ["static/description/Hotel.png"],
