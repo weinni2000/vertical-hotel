@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <menuitem id="hotel_management_menu" name="Hotel Management" />
+    <menuitem
+        id="hotel_management_menu"
+        name="Hotel Management"
+        action="open_hotel_folio1_form_tree_all"
+        groups="vertical_hotel.group_hotel_user"
+    />
     <menuitem
         id="hotel_configuration_menu"
         name="Configuration"
